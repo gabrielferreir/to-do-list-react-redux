@@ -1,30 +1,38 @@
-import {CLICK_UPDATE_VALUE, UPDATE_LIST, UPDATE_INPUT} from '../actions/actionTypes';
+import {CHECK_ITEM, UPDATE_LIST, UPDATE_INPUT} from '../actions/actionTypes';
 
 const initialState = {
     inpuValue: '',
     lastValue: '',
-    list: []
+    list: [
+        {
+            name: 'Item 01',
+            checked: true
+        }
+    ]
 };
 export const clickReducer = (state = initialState, action) => {
-    console.log(action);
     switch (action.type) {
-        case CLICK_UPDATE_VALUE:
-            return {
-                ...state,
-                lastValue: action.lastValue
-            };
         case UPDATE_LIST:
             return {
                 ...state,
+                inputValue: '',
                 list: [
                     ...state.list,
-                    action.value
+                    {name: action.value, checked: false}
                 ]
             };
         case UPDATE_INPUT:
             return {
                 ...state,
-                inputValue: action.value.target.value
+                inputValue: action.value
+            };
+        case CHECK_ITEM:
+            return {
+                ...state,
+                list: state.list.map((item, index) => ({
+                    ...item,
+                    checked: index === action.index ? !item.checked : item.checked
+                }))
             };
         default:
             return state;

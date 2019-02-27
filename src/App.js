@@ -1,30 +1,51 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {clickButton, updateList, updateInput} from './actions';
+import {checkItem, updateList, updateInput} from './actions';
 import './App.css';
+import AddTodo from './components/addTodo';
 
 class App extends Component {
+
     render() {
-        const {clickButton, updateList, updateInput, lastValue, list, inputValue} = this.props;
+        const {list, checkItem} = this.props;
         return (
-            <div className="App" style={{paddingTop: '10px'}}>
-                <input type='text' onChange={updateInput} value={inputValue}/>
-                <button onClick={() => {
-                    updateList(inputValue);
-                    clickButton(inputValue);
-                }}>
-                    Click me!
-                </button>
-                <h1>{lastValue}</h1>
-                <div>
-                    <span>Lista</span>
-                    <ul>
-                        {list.map(item => {
-                            return (<li>{item}</li>);
-                        })}
-                    </ul>
-                </div>
+            <div className="App">
+
+                <header className="ui-toolbar">
+                    <div className="ui-header">
+                        <h1 className="ui-toolbar__title">TO DO LIST</h1>
+                    </div>
+                    <div className="header-space"></div>
+                </header>
+
+                <section className="ui-content">
+
+                    <section className="ui-card">
+
+                        <div className="card__toolbar">
+                            Checklist
+                        </div>
+
+                        <AddTodo/>
+
+                        <div>
+                            <ul>
+                                {list.map((item, index) => {
+                                    return (<li className="ui-list-item" key={'item' + index}>
+                                        <input type="checkbox" checked={item.checked} onChange={() => {
+                                            checkItem(index);
+                                        }}/>
+                                        <span className="ui-list-item-title">{item.name}</span>
+                                    </li>);
+                                })}
+                            </ul>
+                        </div>
+
+                    </section>
+
+                </section>
+
             </div>
         );
     }
@@ -37,6 +58,6 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({clickButton, updateList, updateInput}, dispatch);
+    bindActionCreators({checkItem, updateList, updateInput}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
