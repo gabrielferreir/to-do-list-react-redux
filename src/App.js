@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {clickButton, updateList, updateInput} from './actions';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        const {clickButton, updateList, updateInput, lastValue, list, inputValue} = this.props;
+        return (
+            <div className="App" style={{paddingTop: '10px'}}>
+                <input type='text' onChange={updateInput} value={inputValue}/>
+                <button onClick={() => {
+                    updateList(inputValue);
+                    clickButton(inputValue);
+                }}>
+                    Click me!
+                </button>
+                <h1>{lastValue}</h1>
+                <div>
+                    <span>Lista</span>
+                    <ul>
+                        {list.map(item => {
+                            return (<li>{item}</li>);
+                        })}
+                    </ul>
+                </div>
+            </div>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = store => ({
+    lastValue: store.clickState.lastValue,
+    list: store.clickState.list,
+    inputValue: store.clickState.inputValue
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({clickButton, updateList, updateInput}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
