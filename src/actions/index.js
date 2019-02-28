@@ -1,4 +1,4 @@
-import {CHECK_ITEM, UPDATE_INPUT, UPDATE_LIST} from './actionTypes';
+import {REMOVE_ITEM, CHECK_ITEM, UPDATE_INPUT, UPDATE_LIST} from './actionTypes';
 
 export const updateList = value => ({
     type: UPDATE_LIST,
@@ -15,4 +15,11 @@ export const checkItem = index => {
         type: CHECK_ITEM,
         index: index
     };
+};
+
+export const deleteItem = index => {
+    return {
+        type: REMOVE_ITEM,
+        index: index
+    }
 };

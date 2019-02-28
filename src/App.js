@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {checkItem, updateList, updateInput} from './actions';
+import {checkItem, updateList, updateInput, deleteItem} from './actions';
 import './App.css';
 import AddTodo from './components/addTodo';
 
 class App extends Component {
 
     render() {
-        const {list, checkItem} = this.props;
+        const {list, checkItem, deleteItem} = this.props;
         return (
             <div className="App">
 
@@ -33,12 +33,21 @@ class App extends Component {
                             <ul>
                                 {list.map((item, index) => {
                                     return (<li className="ui-list-item" key={'item' + index}>
-                                        <input type="checkbox" checked={item.checked} onChange={() => {
-                                            checkItem(index);
-                                        }}/>
-                                        <span className="ui-list-item-title">{item.name}</span>
+                                        <div>
+                                            <input type="checkbox" checked={item.checked} onChange={() => {
+                                                checkItem(index);
+                                            }}/>
+                                            <span className="ui-list-item-title">{item.name}</span>
+                                        </div>
+                                        <i className="material-icons pointer" onClick={() => {
+                                            deleteItem(index);
+                                        }}>clear</i>
                                     </li>);
                                 })}
+
+                                {(!list || !list.length) && <li className="ui-list-item ui-list-without-item">
+                                    Nenhum item na lista
+                                </li>}
                             </ul>
                         </div>
 
@@ -58,6 +67,6 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({checkItem, updateList, updateInput}, dispatch);
+    bindActionCreators({checkItem, updateList, updateInput, deleteItem}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

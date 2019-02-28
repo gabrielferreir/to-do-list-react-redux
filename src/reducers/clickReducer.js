@@ -1,14 +1,9 @@
-import {CHECK_ITEM, UPDATE_LIST, UPDATE_INPUT} from '../actions/actionTypes';
+import {CHECK_ITEM, UPDATE_LIST, UPDATE_INPUT, REMOVE_ITEM} from '../actions/actionTypes';
 
 const initialState = {
     inpuValue: '',
     lastValue: '',
-    list: [
-        {
-            name: 'Item 01',
-            checked: true
-        }
-    ]
+    list: []
 };
 export const clickReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -33,6 +28,11 @@ export const clickReducer = (state = initialState, action) => {
                     ...item,
                     checked: index === action.index ? !item.checked : item.checked
                 }))
+            };
+        case REMOVE_ITEM:
+            return {
+                ...state,
+                list: state.list.filter((item, index) => index !== action.index)
             };
         default:
             return state;
