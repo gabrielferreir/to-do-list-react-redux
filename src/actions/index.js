@@ -18,8 +18,12 @@ export const checkItem = index => {
 };
 
 export const deleteItem = index => {
-  return {
-    type: REMOVE_ITEM,
-    index: index
+  return dispatch => {
+    setTimeout(() => {
+      dispatch({
+        type: REMOVE_ITEM,
+        index: index
+      });
+    }, 2000);
   };
 };

@@ -1,4 +1,9 @@
-import { CHECK_ITEM, UPDATE_LIST, UPDATE_INPUT, REMOVE_ITEM } from '../actions/actionTypes';
+import {
+  CHECK_ITEM,
+  UPDATE_LIST,
+  UPDATE_INPUT,
+  REMOVE_ITEM
+} from '../actions/actionTypes';
 
 const initialState = {
   inpuValue: '',

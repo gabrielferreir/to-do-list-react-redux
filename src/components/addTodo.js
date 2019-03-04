@@ -5,8 +5,8 @@ import { updateList, updateInput } from '../actions';
 
 class AddTodo extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.submit = this.submit.bind(this);
     this.pressEnter = this.pressEnter.bind(this);
   }
@@ -38,7 +38,7 @@ class AddTodo extends Component {
           updateInput(event.target.value);
         }} value={inputValue || ''}/>
 
-        <i className="material-icons icon-add" onClick={() => this.submit()}>add</i>
+        <i className="material-icons icon-add" onClick={this.submit}>add</i>
       </div>
     );
   }
